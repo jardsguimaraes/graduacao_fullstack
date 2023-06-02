@@ -15,44 +15,44 @@ public class PessoaFisicaRepo {
         listaDePessoasFisica.add(pf);
     }
 
-    public void alterar(int indice, PessoaFisica pf) {
-        listaDePessoasFisica.set(indice, pf);
+    public void alterar(int id, PessoaFisica pf) {
+        listaDePessoasFisica.set(buscarIndex(id), pf);
     }
 
     public void excluir(int id) {
-        listaDePessoasFisica.remove(id);
+        listaDePessoasFisica.remove(buscarIndex(id));
     }
 
     public PessoaFisica obter(int id) {
-        return listaDePessoasFisica.get(id);
+        return listaDePessoasFisica.get(buscarIndex(id));
+    }
+
+    private int buscarIndex(int id) {
+        for (PessoaFisica pf : listaDePessoasFisica) {
+            if (pf.getId() == id) {
+                return listaDePessoasFisica.indexOf(pf);
+            }
+        }
+        return -1;
     }
 
     public ArrayList<PessoaFisica> obterTodos() {
         return listaDePessoasFisica;
     }
 
-    public void persistir(String nomeArquivo) {
-        try (FileOutputStream fout = new FileOutputStream("src\\files\\" + nomeArquivo + ".txt");
+    public void persistir(String nomeArquivo) throws IOException {
+        try (FileOutputStream fout = new FileOutputStream("src\\files\\" + nomeArquivo + ".fisica.bin");
                 ObjectOutputStream oos = new ObjectOutputStream(fout)) {
             oos.writeObject(this.listaDePessoasFisica);
             System.out.println("Dados de Pessoa Física Armazenados.");
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
-    public ArrayList<PessoaFisica> recuperar(String nomeArquivo) {
-        try (FileInputStream fin = new FileInputStream("src\\files\\" + nomeArquivo + ".txt");
+    public void recuperar(String nomeArquivo) throws ClassNotFoundException, IOException{
+        try (FileInputStream fin = new FileInputStream("src\\files\\" + nomeArquivo + ".fisica.bin");
                 ObjectInputStream ois = new ObjectInputStream(fin)) {
             listaDePessoasFisica = (ArrayList<PessoaFisica>) ois.readObject();
-            System.out.println("Dados de Pessoas Física Recuperados.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return listaDePessoasFisica;
+        } 
 
     }
 }

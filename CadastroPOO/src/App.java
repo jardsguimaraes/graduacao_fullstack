@@ -1,36 +1,93 @@
-import model.PessoaFisica;
+import java.util.Scanner;
+
 import model.PessoaFisicaRepo;
-import model.PessoaJuridica;
+import model.PessoaFisicaService;
 import model.PessoaJuridicaRepo;
+import model.PessoaJuridicaService;
 
 public class App {
     public static void main(String[] args) throws Exception {
 
-        PessoaFisicaRepo repo1 = new PessoaFisicaRepo();
+        Scanner escanner = new Scanner(System.in);
+        int opcao = -1;
+        String resposta;
+        PessoaFisicaRepo pessoaFisicaRepo = new PessoaFisicaRepo();
+        PessoaJuridicaRepo pessoaJuridicaRepo = new PessoaJuridicaRepo();
 
-        repo1.inserir(new PessoaFisica(1, "Ana", "11111111111", 25));
-        repo1.inserir(new PessoaFisica(2, "Carlos", "22222222222", 52));
+        while (opcao != 0) {
+            System.out.println("===================================================");
+            System.out.println("1 - Incluir Pessoa");
+            System.out.println("2 - Alterar Pessoa");
+            System.out.println("3 - Excluir Pessoa");
+            System.out.println("4 - Buscar por Id");
+            System.out.println("5 - Exibir Todos");
+            System.out.println("6 - Persistir Dados");
+            System.out.println("7 - Recuperar Dados");
+            System.out.println("0 - Finalizar Programa");
+            System.out.println("===================================================");
+            opcao = escanner.nextInt();
 
-        repo1.persistir("PessoaFisica");
-
-        PessoaFisicaRepo repo2 = new PessoaFisicaRepo();
-        repo2.recuperar("PessoaFisica");
-
-        for (PessoaFisica pf : repo2.obterTodos()) {
-            pf.exibir();
+            switch (opcao) {
+                case 1:
+                    resposta = pessoa(escanner).equals("F")
+                            ? PessoaFisicaService.cadastrar(escanner, pessoaFisicaRepo)
+                            : PessoaJuridicaService.cadastrar(escanner, pessoaJuridicaRepo);
+                    System.out.println(resposta);
+                    break;
+                case 2:
+                    resposta = pessoa(escanner).equals("F")
+                            ? PessoaFisicaService.alterar(escanner, pessoaFisicaRepo)
+                            : PessoaJuridicaService.alterar(escanner, pessoaJuridicaRepo);
+                    System.out.println(resposta);
+                    break;
+                case 3:
+                    resposta = pessoa(escanner).equals("F")
+                            ? PessoaFisicaService.excluir(escanner, pessoaFisicaRepo)
+                            : PessoaJuridicaService.excluir(escanner, pessoaJuridicaRepo);
+                    System.out.println(resposta);
+                    break;
+                case 4:
+                    resposta = pessoa(escanner).equals("F")
+                            ? PessoaFisicaService.obter(escanner, pessoaFisicaRepo)
+                            : PessoaJuridicaService.obter(escanner, pessoaJuridicaRepo);
+                    System.out.println(resposta);
+                    break;
+                case 5:
+                    resposta = pessoa(escanner).equals("F")
+                            ? PessoaFisicaService.exibir(escanner, pessoaFisicaRepo)
+                            : PessoaJuridicaService.exibir(escanner, pessoaJuridicaRepo);
+                    System.out.println(resposta);
+                    break;
+                case 6:
+                    resposta = pessoa(escanner).equals("F")
+                            ? PessoaFisicaService.salvar(escanner, pessoaFisicaRepo)
+                            : PessoaJuridicaService.salvar(escanner, pessoaJuridicaRepo);
+                    System.out.println(resposta);
+                    break;
+                case 7:
+                    resposta = pessoa(escanner).equals("F")
+                            ? PessoaFisicaService.recuperar(escanner, pessoaFisicaRepo)
+                            : PessoaJuridicaService.recuperar(escanner, pessoaJuridicaRepo);
+                    System.out.println(resposta);
+                    break;
+                case 0:
+                    System.out.println("Programa Finalizado com Sucesso!");
+                    System.exit(0);
+                default:
+                    System.out.println("Digite uma das opções entre 0 - 7");
+                    break;
+            }
         }
 
-        PessoaJuridicaRepo repo3 = new PessoaJuridicaRepo();
-        repo3.inserir(new PessoaJuridica(3, "XPTO Sales", "33333333333333"));
-        repo3.inserir(new PessoaJuridica(4, "XPTO Solutions", "44444444444444"));
-
-        repo3.persistir("PessoaJuridica");
-
-        PessoaJuridicaRepo repo4 = new PessoaJuridicaRepo();
-        repo4.recuperar("PessoaJuridica");
-
-        for (PessoaJuridica pj : repo4.obterTodos()) {
-            pj.exibir();
-        }
     }
+
+    private static String pessoa(Scanner escanner) {
+        System.out.println("F - Pessoa Fisica | J - Pessoa Juridica");
+        String selecao = escanner.next().toUpperCase();
+        if (!(selecao.equals("F") || selecao.equals("J"))) {
+            pessoa(escanner);
+        }
+        return selecao;
+    }
+
 }
