@@ -1,0 +1,6 @@
+insert into movimento(idMovimento, quantidade, tipo, valorUnitario, fk_Produto_idPoduto, fk_Usuario_IdUsuario, fk_Pessoa_idPessoa) values(next value for dbo.seq_movimento, 20, 'S', 4.00, 1, 1, 1); 
+insert into movimento(idMovimento, quantidade, tipo, valorUnitario, fk_Produto_idPoduto, fk_Usuario_IdUsuario, fk_Pessoa_idPessoa) values(next value for dbo.seq_movimento, 15, 'S', 2.00, 3, 1, 1); 
+insert into movimento(idMovimento, quantidade, tipo, valorUnitario, fk_Produto_idPoduto, fk_Usuario_IdUsuario, fk_Pessoa_idPessoa) values(next value for dbo.seq_movimento, 10, 'S', 3.00, 3, 2, 1); 
+insert into movimento(idMovimento, quantidade, tipo, valorUnitario, fk_Produto_idPoduto, fk_Usuario_IdUsuario, fk_Pessoa_idPessoa) values(next value for dbo.seq_movimento, 15, 'E', 5.00, 1, 1, 2); 
+insert into movimento(idMovimento, quantidade, tipo, valorUnitario, fk_Produto_idPoduto, fk_Usuario_IdUsuario, fk_Pessoa_idPessoa) values(next value for dbo.seq_movimento, 20, 'E', 4.00, 1, 1, 2); 
+select * from movimento
